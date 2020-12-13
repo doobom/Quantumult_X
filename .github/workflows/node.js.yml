@@ -27,7 +27,7 @@ jobs:
     - run: npm ci
     - run: npm run build --if-present
     - run: npm test
-    - name: "运行 【机场签到】"
+    - name: checkin env
         run: |
           node check_in/glados/checkin_env.js
         env:
