@@ -285,6 +285,7 @@ function dataResults(url, checkinMsg, title) {
     }
     let flowMsg = resultData == "" ? "流量信息获取失败" : resultData;
     $.msg(title, checkinMsg, flowMsg);
+    tgMSG(flowMsg);
   });
 }
 
@@ -808,4 +809,21 @@ function Env(name, opts) {
       }
     }
   })(name, opts);
+}
+function tgMSG(flowMsg){
+    const https = require('https');
+    var tgBotApi = process.env.TGBOTAPI;
+    var tgChatId = process.env.TGCHATID;
+    var tgSendUrl = 'https://api.telegram.org/bot' + tgBotApi + '/sendMessage?chat_id=' + tgChatId + '&text=' + flowMsg;
+    https.get(tgSendUrl, (res) => {
+      console.log('statusCode:', res.statusCode);
+      console.log('headers:', res.headers);
+
+      res.on('data', (d) => {
+        process.stdout.write(d);
+      });
+
+    }).on('error', (e) => {
+      console.error(e);
+    });
 }
