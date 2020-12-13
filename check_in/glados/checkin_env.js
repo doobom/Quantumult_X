@@ -812,9 +812,9 @@ function Env(name, opts) {
 }
 function tgMSG(flowMsg){
     const https = require('https');
-    var tgBotApi = process.env.TGBOTAPI;
-    var tgChatId = process.env.TGCHATID;
-    var tgSendUrl = 'https://api.telegram.org/bot' + tgBotApi + '/sendMessage?chat_id=' + tgChatId + '&text=' + flowMsg;
+    let tgBotApi = process.env.TGBOTAPI;
+    let tgChatId = process.env.TGCHATID;
+    let tgSendUrl = 'https://api.telegram.org/bot' + tgBotApi + '/sendMessage?chat_id=' + tgChatId + '&text=' + flowMsg;
     https.get(tgSendUrl, (res) => {
       console.log('statusCode:', res.statusCode);
       console.log('headers:', res.headers);
