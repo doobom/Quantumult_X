@@ -284,7 +284,7 @@ function dataResults(url, checkinMsg, title) {
       }
     }
     let flowMsg = resultData == "" ? "流量信息获取失败" : resultData;
-    $.msg(title, checkinMsg, flowMsg, 'https://api.telegram.org/bot364071553:AAGpQiViHqBtnSf5MZ2CwzxrJPHD2vk5GVw/sendMessage?chat_id=34083687&text=${flowMsg}');
+    $.msg(title, checkinMsg, flowMsg);
   });
 }
 
