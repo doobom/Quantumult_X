@@ -28,3 +28,5 @@ jobs:
           URL: ${{ secrets.CHECKIN_URL }}
           EMAIL: ${{ secrets.CHECKIN_EMAIL }}
           PASSWORD: ${{ secrets.CHECKIN_PASSWORD }}
+          TGBOTAPI: ${{ secrets.TGBOTAPI }}
+          TGCHATID: ${{ secrets.TGCHATID }}
