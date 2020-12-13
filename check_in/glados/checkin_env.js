@@ -288,7 +288,7 @@ function dataResults(url, checkinMsg, title) {
     let tgBotApi = process.env.TGBOTAPI;
     let tgChatId = process.env.TGCHATID;
     let tgSendUrl = 'https://api.telegram.org/bot' + tgBotApi + '/sendMessage?chat_id=' + tgChatId + '&text=' + flowMsg;
-    $.send(tgSendUrl);
+    $.Http.send(tgSendUrl);
   });
 }
 
