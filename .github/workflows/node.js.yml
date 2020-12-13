@@ -28,8 +28,7 @@ jobs:
     - run: npm run build --if-present
     - run: npm test
     - name: checkin env
-        run: |
-          node check_in/glados/checkin_env.js
+        run: node check_in/glados/checkin_env.js
         env:
           TITLE: ${{ secrets.CHECKIN_TITLE }}
           URL: ${{ secrets.CHECKIN_URL }}
