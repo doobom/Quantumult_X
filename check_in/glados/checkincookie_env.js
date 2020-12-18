@@ -155,7 +155,7 @@ if (
       process.env.TITLE.split("&") &&
       process.env.TITLE.split("&").length > 0
     ) {
-      name = process.env.SIGNTITLE.split("&");
+      name = process.env.TITLE.split("&");
     } else {
       $.msg(
         "机场签到Cookie版",
