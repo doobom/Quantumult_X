@@ -196,6 +196,7 @@ function login(url, email, password, title) {
     if (error) {
       console.log(error);
       $.msg(title + "登录失败", JSON.stringify(error), "");
+      tgMSG(title, "登录失败", JSON.stringify(error));
     } else {
       if (
         JSON.parse(data).msg.match(
@@ -222,6 +223,7 @@ function checkin(url, email, password, title) {
     if (error) {
       console.log(error);
       $.msg(title + "签到失败", JSON.stringify(error), "");
+      tgMSG(title, "签到失败", JSON.stringify(error));
     } else {
       if (data.match(/\"msg\"\:/)) {
         dataResults(url, JSON.parse(data).msg, title);
@@ -289,15 +291,20 @@ function dataResults(url, checkinMsg, title) {
     }
     let flowMsg = resultData == "" ? "流量信息获取失败" : resultData;
     $.msg(title, checkinMsg, flowMsg);
-    tgMSG(title, resultData);
+    tgMSG(title, checkinMsg, flowMsg);
   });
 }
 
-function tgMSG(strTitle, strMSG){
+function tgMSG(strTitle, strCHK, strMSG){
  let tgBotApi = process.env.TGBOTAPI;
  let tgChatId = process.env.TGCHATID;
+ //var chkTime = $.time('yyyy-MM-dd HH:mm:ss');
+ var chkTime = `${new Date(
+          new Date().getTime() + 8 * 60 * 60 * 1000
+        ).toLocaleString()}`;
+ var sendMsg = encodeURI(strTitle + "\n" + "北京时间(UTC+8)：" + chkTime + "\n" + strCHK + "\n" + strMSG);
  var tgSendUrl = {
-    url: 'https://api.telegram.org/bot' + tgBotApi + '/sendMessage?chat_id=' + tgChatId + '&text=' + encodeURI(strTitle + "\n------------\n" + strMSG),
+    url: 'https://api.telegram.org/bot' + tgBotApi + '/sendMessage?chat_id=' + tgChatId + '&text=' + sendMsg,
  };
  $.get(tgSendUrl, (error, response, data) => {
   console.log(data);
