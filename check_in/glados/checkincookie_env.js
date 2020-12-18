@@ -291,7 +291,7 @@ function tgMSG(strTitle, strCHK, strMSG){
  var chkTime = `${new Date(
           new Date().getTime() + 8 * 60 * 60 * 1000
         ).toLocaleString()}`;
- var sendMsg = encodeURI(strTitle + "\n" + "北京时间(UTC+8)：" + chkTime + "\n" + strCHK + "\n" + strMSG);
+ var sendMsg = encodeURI(strTitle + "\n" + chkTime + "\n" + strCHK + "\n" + strMSG);
  var tgSendUrl = {
     url: 'https://api.telegram.org/bot' + tgBotApi + '/sendMessage?chat_id=' + tgChatId + '&text=' + sendMsg,
  };
