@@ -287,10 +287,10 @@ function dataResults(url, cookie, checkinMsg, name) {
 function tgMSG(strTitle, strCHK, strMSG){
  let tgBotApi = process.env.TGBOTAPI;
  let tgChatId = process.env.TGCHATID;
+ var chkTime = ${new Date().getTime() + 8 * 60 * 60 * 1000).toLocaleString()};
+ var sendMsg = encodeURI(strTitle + "\n" + "北京时间(UTC+8)：" + chkTime + "\n" + strCHK + "\n" + strMSG);
  var tgSendUrl = {
-    url: 'https://api.telegram.org/bot' + tgBotApi + '/sendMessage?chat_id=' + tgChatId + '&text=' + encodeURI(strTitle + "\n" + "北京时间(UTC+8)：" + ${new Date(
-          new Date().getTime() + 8 * 60 * 60 * 1000
-        ).toLocaleString()} + "\n" + strCHK + "\n" + strMSG),
+    url: 'https://api.telegram.org/bot' + tgBotApi + '/sendMessage?chat_id=' + tgChatId + '&text=' + sendMsg,
  };
  $.get(tgSendUrl, (error, response, data) => {
   console.log(data);
