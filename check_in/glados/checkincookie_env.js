@@ -91,11 +91,11 @@ if (
 } else {
   if ($.isNode()) {
     if (
-      process.env.SIGNURL &&
-      process.env.SIGNURL.split("&") &&
-      process.env.SIGNURL.split("&").length > 0
+      process.env.URL &&
+      process.env.URL.split("&") &&
+      process.env.URL.split("&").length > 0
     ) {
-      siurl = process.env.SIGNURL.split("&");
+      siurl = process.env.URL.split("&");
       console.log(
         `\n==================脚本执行来自 github action=====================\n`
       );
@@ -127,11 +127,11 @@ if (
 } else {
   if ($.isNode()) {
     if (
-      process.env.SIGNCOOKIE &&
-      process.env.SIGNCOOKIE.split("&") &&
-      process.env.SIGNCOOKIE.split("&").length > 0
+      process.env.COOKIE &&
+      process.env.COOKIE.split("&") &&
+      process.env.COOKIE.split("&").length > 0
     ) {
-      sicookie = process.env.SIGNCOOKIE.split("&");
+      sicookie = process.env.COOKIE.split("&");
     } else {
       $.msg(
         "机场签到Cookie版",
@@ -151,9 +151,9 @@ if (
 } else {
   if ($.isNode()) {
     if (
-      process.env.SIGNTITLE &&
-      process.env.SIGNTITLE.split("&") &&
-      process.env.SIGNTITLE.split("&").length > 0
+      process.env.TITLE &&
+      process.env.TITLE.split("&") &&
+      process.env.TITLE.split("&").length > 0
     ) {
       name = process.env.SIGNTITLE.split("&");
     } else {
@@ -212,6 +212,7 @@ function checkin(url, cookie, name) {
     if (error) {
       console.log(error);
       $.msg(name, "签到失败", error);
+      tgMSG(name, "签到失败");
     } else {
       if (data.match(/\"msg\"\:/)) {
         dataResults(url, cookie, JSON.parse(data).msg, name);
@@ -219,6 +220,7 @@ function checkin(url, cookie, name) {
       } else if (data.match(/login/)) {
         console.log(data);
         $.msg(name, "", "⚠️Cookie失效啦，请重新获取Cookie");
+        tgMSG(name, "⚠️Cookie失效啦，请重新获取Cookie");
       } else {
         console.log(data);
         $.msg(name, "", "⚠️签到失败，某些地方出错啦，请查看日志");
