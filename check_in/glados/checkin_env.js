@@ -289,13 +289,13 @@ function dataResults(url, checkinMsg, title) {
     }
     let flowMsg = resultData == "" ? "流量信息获取失败" : resultData;
     $.msg(title, checkinMsg, flowMsg);
-    tgMSG(flowMSG);
+    tgMSG(resultData);
   });
 }
-function tgMSG(flowMSG){
+function tgMSG(strMSG){
  let tgBotApi = process.env.TGBOTAPI;
  let tgChatId = process.env.TGCHATID;
- let tgSendUrl = 'https://api.telegram.org/bot' + tgBotApi + '/sendMessage?chat_id=' + tgChatId + '&text=' + flowMsg;
+ let tgSendUrl = 'https://api.telegram.org/bot' + tgBotApi + '/sendMessage?chat_id=' + tgChatId + '&text=' + strMSG;
  $.get(tgSendUrl, (error, response, data) => {
   console.log(data);
  });
