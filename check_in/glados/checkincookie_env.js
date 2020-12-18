@@ -203,7 +203,7 @@ function checkin(url, cookie, name) {
     if (error) {
       console.log(error);
       $.msg(name, "签到失败", error);
-      tgMSG(name, "签到失败");
+      tgMSG(name, "签到失败", error);
     } else {
       if (data.match(/\"msg\"\:/)) {
         dataResults(url, cookie, JSON.parse(data).msg, name);
@@ -211,10 +211,11 @@ function checkin(url, cookie, name) {
       } else if (data.match(/login/)) {
         console.log(data);
         $.msg(name, "", "⚠️Cookie失效啦，请重新获取Cookie");
-        tgMSG(name, "⚠️Cookie失效啦，请重新获取Cookie");
+        tgMSG(name, "", "⚠️Cookie失效啦，请重新获取Cookie");
       } else {
         console.log(data);
         $.msg(name, "", "⚠️签到失败，某些地方出错啦，请查看日志");
+        tgMSG(name, "", "⚠️签到失败，某些地方出错啦，请查看日志");
       }
     }
   });
@@ -278,16 +279,18 @@ function dataResults(url, cookie, checkinMsg, name) {
     }
     let flowMsg = resultData == "" ? "流量信息获取失败" : resultData;
     $.msg(name, checkinMsg, flowMsg);
-    tgMSG(name, flowMsg);
+    tgMSG(name, checkinMsg, flowMsg);
   });
 }
 
 
-function tgMSG(strTitle, strMSG){
+function tgMSG(strTitle, strCHK, strMSG){
  let tgBotApi = process.env.TGBOTAPI;
  let tgChatId = process.env.TGCHATID;
  var tgSendUrl = {
-    url: 'https://api.telegram.org/bot' + tgBotApi + '/sendMessage?chat_id=' + tgChatId + '&text=' + encodeURI(strTitle + "\n------------\n" + strMSG),
+    url: 'https://api.telegram.org/bot' + tgBotApi + '/sendMessage?chat_id=' + tgChatId + '&text=' + encodeURI(strTitle + "\n" + "北京时间(UTC+8)：" + ${new Date(
+          new Date().getTime() + 8 * 60 * 60 * 1000
+        ).toLocaleString()} + "\n" + strCHK + "\n" + strMSG),
  };
  $.get(tgSendUrl, (error, response, data) => {
   console.log(data);
