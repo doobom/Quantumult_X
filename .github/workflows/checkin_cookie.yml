@@ -22,7 +22,7 @@ jobs:
           npm install
       - name: "运行 【机场签到】"
         run: |
-          node check_in/glados/checkin_env.js
+          node check_in/glados/checkincookie_env.js
         env:
           TITLE: ${{ secrets.SIGNTITLE }}
           URL: ${{ secrets.SIGNURL }}
