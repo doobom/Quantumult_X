@@ -78,10 +78,100 @@ cron "5 0 * * *" tag=机场签到Cookie版, script-path=https://raw.githubuserco
 const $ = new Env("机场签到Cookie版");
 const signurl = "evil_checkinurl";
 const signcookie = "evil_checkincookie";
+const signtitle = "evil_checkincktitle";
 
-var siurl = $.getdata(signurl);
-var sicookie = $.getdata(signcookie);
+//var siurl = $.getdata(signurl);
+//var sicookie = $.getdata(signcookie);
+if (
+  $.getdata(signurl) != undefined &&
+  $.getdata(signurl) != ""
+) {
+  var acc = $.getdata(signurl);
+  siurl = acc.split("，");
+} else {
+  if ($.isNode()) {
+    if (
+      process.env.SIGNURL &&
+      process.env.SIGNURL.split("&") &&
+      process.env.SIGNURL.split("&").length > 0
+    ) {
+      siurl = process.env.SIGNURL.split("&");
+      console.log(
+        `\n==================脚本执行来自 github action=====================\n`
+      );
+      console.log(
+        `==================脚本执行-国际标准时间(UTC)：${new Date().toLocaleString()}=====================\n`
+      );
+      console.log(
+        `==================脚本执行- 北京时间(UTC+8)：${new Date(
+          new Date().getTime() + 8 * 60 * 60 * 1000
+        ).toLocaleString()}=====================\n`
+      );
+    } else {
+      $.msg(
+        "机场签到Cookie版",
+        "",
+        "请在 BoxJs/Secrets 检查网址填写是否正确",
+        "http://boxjs.com"
+      );
+    }
+  }
+}
 
+if (
+  $.getdata(signcookie) != undefined &&
+  $.getdata(signcookie) != ""
+) {
+  var acc = $.getdata(signcookie);
+  sicookie = acc.split("，");
+} else {
+  if ($.isNode()) {
+    if (
+      process.env.SIGNCOOKIE &&
+      process.env.SIGNCOOKIE.split("&") &&
+      process.env.SIGNCOOKIE.split("&").length > 0
+    ) {
+      sicookie = process.env.SIGNCOOKIE.split("&");
+    } else {
+      $.msg(
+        "机场签到Cookie版",
+        "",
+        "请在 BoxJs/Secrets 检查COOKIE填写是否正确",
+        "http://boxjs.com"
+      );
+    }
+  }
+}
+if (
+  $.getdata(signtitle) != undefined &&
+  $.getdata(signtitle) != ""
+) {
+  var acc = $.getdata(signtitle);
+  name = acc.split("，");
+} else {
+  if ($.isNode()) {
+    if (
+      process.env.SIGNTITLE &&
+      process.env.SIGNTITLE.split("&") &&
+      process.env.SIGNTITLE.split("&").length > 0
+    ) {
+      name = process.env.SIGNTITLE.split("&");
+    } else {
+      $.msg(
+        "机场签到Cookie版",
+        "",
+        "请在 BoxJs/Secrets 检查标题填写是否正确",
+        "http://boxjs.com"
+      );
+    }
+  }
+}
+/*
+  var name = $.getdata("evil_checkincktitle");
+  if (name == undefined || name == "") {
+    name = "机场签到Cookie版";
+  }
+  */
 !(async () => {
   if (typeof $request != "undefined") {
     getCookie();
@@ -99,10 +189,6 @@ var sicookie = $.getdata(signcookie);
       "❌请在 BoxJs 检查填写是否正确或是否获取到Cookie",
       "http://boxjs.com"
     );
-  }
-  var name = $.getdata("evil_checkincktitle");
-  if (name == undefined || name == "") {
-    name = "机场签到Cookie版";
   }
   checkin(siurl, sicookie, name);
 })()
@@ -199,7 +285,20 @@ function dataResults(url, cookie, checkinMsg, name) {
     }
     let flowMsg = resultData == "" ? "流量信息获取失败" : resultData;
     $.msg(name, checkinMsg, flowMsg);
+    tgMSG(name, flowMsg);
   });
+}
+
+
+function tgMSG(strTitle, strMSG){
+ let tgBotApi = process.env.TGBOTAPI;
+ let tgChatId = process.env.TGCHATID;
+ var tgSendUrl = {
+    url: 'https://api.telegram.org/bot' + tgBotApi + '/sendMessage?chat_id=' + tgChatId + '&text=' + encodeURI(strTitle + "\n------------\n" + strMSG),
+ };
+ $.get(tgSendUrl, (error, response, data) => {
+  console.log(data);
+ });
 }
 
 function flowFormat(data) {
