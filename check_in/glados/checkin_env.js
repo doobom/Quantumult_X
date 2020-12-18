@@ -292,16 +292,18 @@ function dataResults(url, checkinMsg, title) {
     tgMSG(title, resultData);
   });
 }
+
 function tgMSG(strTitle, strMSG){
  let tgBotApi = process.env.TGBOTAPI;
  let tgChatId = process.env.TGCHATID;
  var tgSendUrl = {
-    url: 'https://api.telegram.org/bot' + tgBotApi + '/sendMessage?chat_id=' + tgChatId + '&text=' + encodeURI(strTitle + "\n" + strMSG),
+    url: 'https://api.telegram.org/bot' + tgBotApi + '/sendMessage?chat_id=' + tgChatId + '&text=' + encodeURI(strTitle + "\n------------\n" + strMSG),
  };
  $.get(tgSendUrl, (error, response, data) => {
   console.log(data);
  });
 }
+
 function flowFormat(data) {
   data = data.replace(/\d+(\.\d+)*%/, "");
   let flow = data.match(/\d+(\.\d+)*\w*/);
