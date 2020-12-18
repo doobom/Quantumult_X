@@ -86,16 +86,13 @@ if (
   $.getdata(signurl) != undefined &&
   $.getdata(signurl) != ""
 ) {
-  var acc = $.getdata(signurl);
-  siurl = acc.split("，");
+  siurl = $.getdata(signurl);
 } else {
   if ($.isNode()) {
     if (
-      process.env.URL &&
-      process.env.URL.split("&") &&
-      process.env.URL.split("&").length > 0
+      process.env.URL
     ) {
-      siurl = process.env.URL.split("&");
+      siurl = process.env.URL;
       console.log(
         `\n==================脚本执行来自 github action=====================\n`
       );
@@ -122,16 +119,13 @@ if (
   $.getdata(signcookie) != undefined &&
   $.getdata(signcookie) != ""
 ) {
-  var acc = $.getdata(signcookie);
-  sicookie = acc.split("，");
+  sicookie = $.getdata(signcookie);
 } else {
   if ($.isNode()) {
     if (
-      process.env.COOKIE &&
-      process.env.COOKIE.split("&") &&
-      process.env.COOKIE.split("&").length > 0
+      process.env.COOKIE
     ) {
-      sicookie = process.env.COOKIE.split("&");
+      sicookie = process.env.COOKIE;
     } else {
       $.msg(
         "机场签到Cookie版",
@@ -146,16 +140,13 @@ if (
   $.getdata(signtitle) != undefined &&
   $.getdata(signtitle) != ""
 ) {
-  var acc = $.getdata(signtitle);
-  name = acc.split("，");
+  name = $.getdata(signtitle);
 } else {
   if ($.isNode()) {
     if (
-      process.env.TITLE &&
-      process.env.TITLE.split("&") &&
-      process.env.TITLE.split("&").length > 0
+      process.env.TITLE
     ) {
-      name = process.env.TITLE.split("&");
+      name = process.env.TITLE;
     } else {
       $.msg(
         "机场签到Cookie版",
